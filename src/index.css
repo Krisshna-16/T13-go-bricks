@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-green: #00FF41;
+  --color-brand-dark-green: #008F20;
+  --color-brand-darker-green: #003F0F;
+  --color-charcoal-card: #1A1A1A;
+  --color-charcoal-border: #2E2E2E;
+  --color-black-main: #0A0A0A;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --animate-fade-in: fade-in 0.2s ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2E2E2E;
+  border-radius: 3px;
+  border: 1px solid #1A1A1A;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00FF41;
+}
+
+/* Base style resets */
+html, body {
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Neon Glow Effects */
+.glow-green-text {
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.4), 0 0 20px rgba(0, 255, 65, 0.1);
+}
+
+.glow-green-box {
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.08);
+  border-color: rgba(0, 255, 65, 0.2);
+}
+
+.glow-green-box:hover {
+  box-shadow: 0 0 25px rgba(0, 255, 65, 0.18);
+  border-color: rgba(0, 255, 65, 0.4);
+}
+
+/* Print CSS Styles */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm;
+  }
+  
+  html, body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+  }
+
+  #root {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    display: block !important;
+    min-height: auto !important;
+  }
+
+  /* Hide navigation, buttons and compliance panel during print */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Force hidden tab pages to display sequentially for print layout */
+  .print-force-block {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    margin-bottom: 3rem !important;
+    page-break-after: always;
+  }
+
+  .print-force-block:last-child {
+    page-break-after: avoid;
+  }
+
+  /* Styling of cards during print */
+  .print-card-style {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #CBD5E1 !important;
+    box-shadow: none !important;
+    padding: 1.25rem !important;
+    border-radius: 8px !important;
+    page-break-inside: avoid !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Headings for print */
+  .print-heading-main {
+    color: #000000 !important;
+    font-size: 20pt !important;
+    border-bottom: 3px solid #000000 !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 6px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+  }
+
+  .print-heading-sub {
+    color: #475569 !important;
+    font-size: 10pt !important;
+    margin-bottom: 2rem !important;
+    font-weight: 500;
+  }
+
+  .print-section-title {
+    color: #000000 !important;
+    font-size: 14pt !important;
+    border-bottom: 2px solid #475569 !important;
+    padding-bottom: 6px !important;
+    margin-top: 2rem !important;
+    margin-bottom: 1.25rem !important;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .print-section-subtitle {
+    color: #000000 !important;
+    font-size: 11pt !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+    font-weight: 600;
+  }
+
+  /* Table styling during print */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  th {
+    background-color: #F1F5F9 !important;
+    color: #0F172A !important;
+    border: 1px solid #94A3B8 !important;
+    font-weight: 600 !important;
+    font-size: 9pt !important;
+    padding: 8px 10px !important;
+    text-align: left !important;
+  }
+
+  td {
+    background-color: #FFFFFF !important;
+    color: #334155 !important;
+    border: 1px solid #CBD5E1 !important;
+    font-size: 9pt !important;
+    padding: 8px 10px !important;
+  }
+
+  /* Layout conversions for printing charts and stats */
+  .print-grid-1 {
+    display: block !important;
+  }
+
+  .print-grid-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  .print-grid-3 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .print-bullets li {
+    list-style-type: square !important;
+    margin-left: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Hide UI elements like switches, checkboxes or filters in print */
+  .print-hide {
+    display: none !important;
+  }
+}
