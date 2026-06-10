@@ -1613,8 +1613,8 @@ export default function App() {
       <div className="hidden print:block bg-white text-black p-4 select-text">
         
         {/* Cover Sheet */}
-        <div className="print-force-block flex flex-col justify-between h-[27cm]">
-          <div className="border-b-4 border-black pb-8 mt-16">
+        <div className="print-force-block block select-text">
+          <div className="border-b-4 border-black pb-8 mt-12">
             <h1 className="text-3xl font-black tracking-tight uppercase">
               Technology Infrastructure Audit
             </h1>
@@ -1626,7 +1626,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 my-16 text-xs border-y border-gray-300 py-8">
+          <div className="grid grid-cols-2 gap-8 mt-24 mb-16 text-xs border-y border-gray-300 py-8">
             <div>
               <div className="font-bold text-gray-500 uppercase">Prepared For:</div>
               <div className="font-extrabold mt-1 text-black">GO-BRICS Executive Leadership Board</div>
@@ -1647,7 +1647,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="border-t border-gray-300 pt-6 text-[10px] text-gray-500">
+          <div className="border-t border-gray-300 pt-6 mt-32 text-[10px] text-gray-500">
             CONFIDENTIAL REPORT - FOR INTERNAL GO-BRICS REVIEW ONLY
           </div>
         </div>
