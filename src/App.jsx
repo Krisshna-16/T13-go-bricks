@@ -414,7 +414,7 @@ const ROADMAP_SPRINTS = {
     effort: 'Low',
     priority: 'Critical',
     owner: 'Admin Team',
-    implementationTime: '10 Days',
+    implementationTime: '15 Days',
     measurableImpact: 'Immediate reduction of $480/yr in subscription boosters; blocks credential hijacking entry points.',
     successMetrics: '100% of active users enrolled in hardware MFA; Discord workspace completely deprecated.'
   },
@@ -430,7 +430,7 @@ const ROADMAP_SPRINTS = {
     effort: 'Medium',
     priority: 'High',
     owner: 'Operations',
-    implementationTime: '12 Days',
+    implementationTime: '15 Days',
     measurableImpact: 'Reduces time spent searching for B2B deliverables guidelines and standard operating procedures (SOPs).',
     successMetrics: 'All onboarding guides and project metrics sheets cataloged in Notion; public export controls disabled.'
   },
@@ -462,7 +462,7 @@ const ROADMAP_SPRINTS = {
     effort: 'Medium',
     priority: 'High',
     owner: 'Dev Team',
-    implementationTime: '14 Days',
+    implementationTime: '15 Days',
     measurableImpact: 'Decreases intake processing time by 75% and saves operations team members 4 hours of weekly data entry.',
     successMetrics: '100% of client forms automatically processed and tagged in Sheets database within 5 seconds.'
   },
@@ -478,7 +478,7 @@ const ROADMAP_SPRINTS = {
     effort: 'Low',
     priority: 'Medium',
     owner: 'Tech Lead',
-    implementationTime: '8 Days',
+    implementationTime: '15 Days',
     measurableImpact: 'Secures proprietary GO-BRICS code from public model leaks and saves $120/mo in subscription overlaps.',
     successMetrics: 'All developer seats unified under a single parent account; training opt-out verification logs saved.'
   },
