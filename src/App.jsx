@@ -23,7 +23,10 @@ import {
   ArrowRight,
   CheckSquare,
   Zap,
-  Users
+  Users,
+  Terminal,
+  HelpCircle,
+  Info as InfoIcon
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -41,20 +44,224 @@ import {
 
 // --- DATASETS ---
 
-// 12 Realistic Tools for Infrastructure Inventory
+// 12 Expanded Tools for Infrastructure Inventory
 const INITIAL_TOOLS_DATA = [
-  { id: 'github', name: 'GitHub', category: 'Development', purpose: 'Source Control & CI/CD Pipelines', cost: 120, owner: 'Dev Team', status: 'Active', recommendation: 'Keep', notes: 'Primary codebase repository. Integral to B2B deliveries.' },
-  { id: 'gworkspace', name: 'Google Workspace', category: 'Productivity', purpose: 'Corporate Email, Docs & Identity', cost: 480, owner: 'Admin Team', status: 'Active', recommendation: 'Keep', notes: 'Core collaboration suite. Requires seat optimization.' },
-  { id: 'notion', name: 'Notion', category: 'Productivity', purpose: 'Wiki & Shared Knowledge Base', cost: 180, owner: 'Operations', status: 'Active', recommendation: 'Integrate', notes: 'Highly valued, but requires standardized permission sync.' },
-  { id: 'telegram', name: 'Telegram', category: 'Communication', purpose: 'Instant Messaging & Notification Bots', cost: 0, owner: 'Marketing', status: 'Active', recommendation: 'Keep', notes: 'Core real-time coordination and customer notify loops.' },
-  { id: 'canva', name: 'Canva', category: 'Content', purpose: 'Visual Graphics & Brand Assets', cost: 80, owner: 'Design Team', status: 'Active', recommendation: 'Keep', notes: 'Empowers marketing team to publish content rapidly.' },
-  { id: 'claude', name: 'Claude', category: 'AI', purpose: 'Advanced Code & Narrative Engine', cost: 150, owner: 'Dev Team', status: 'Active', recommendation: 'Integrate', notes: 'Utilized heavily for content drafting and code reviews.' },
-  { id: 'chatgpt', name: 'ChatGPT', category: 'AI', purpose: 'B2B Research & Copy Assistance', cost: 150, owner: 'Business Lab', status: 'Active', recommendation: 'Keep', notes: 'Ad-hoc query resolution and translation services.' },
-  { id: 'antigravity', name: 'Antigravity', category: 'Development', purpose: 'Autonomous Agentic Coding Assistant', cost: 300, owner: 'Tech Lead', status: 'Active', recommendation: 'Keep', notes: 'High productivity accelerator for software engineering.' },
-  { id: 'gdrive', name: 'Google Drive', category: 'Content', purpose: 'File Storage & Asset Repository', cost: 120, owner: 'Operations', status: 'Active', recommendation: 'Integrate', notes: 'Contains project delivery documents. Review sharing rules.' },
-  { id: 'sheets', name: 'Sheets', category: 'Operations', purpose: 'Data Tracking & Metrics Reporting', cost: 0, owner: 'Operations', status: 'Needs Review', recommendation: 'Integrate', notes: 'Used for B2B logs; prone to human input errors.' },
-  { id: 'forms', name: 'Forms', category: 'Operations', purpose: 'Client Feedback & Lead Sourcing', cost: 0, owner: 'Marketing', status: 'Needs Review', recommendation: 'Replace', notes: 'Unintegrated lead capture. Shift to centralized system.' },
-  { id: 'discord', name: 'Discord', category: 'Communication', purpose: 'Redundant Chat Workspace', cost: 40, owner: 'Marketing', status: 'Redundant', recommendation: 'Deprecate', notes: 'Leftover community workspace. Has overlapping features with Telegram.' }
+  { 
+    id: 'github', 
+    name: 'GitHub', 
+    category: 'Development', 
+    purpose: 'Source Control & CI/CD Pipelines', 
+    cost: 120, 
+    owner: 'Dev Team', 
+    status: 'Active', 
+    recommendation: 'Keep', 
+    notes: 'Primary codebase repository. Integral to B2B deliveries.',
+    usage: 'Hosts all codebases, developer pull request reviews, and triggers continuous deployments to staging servers.',
+    strengths: 'Industry-standard version control, robust branch protection gates, and seamless integration with Antigravity assistant.',
+    weaknesses: 'High license cost scaling; repository collaborators must be manually audited to prevent guest license leakages.',
+    security: 'Code is secured on cloud, but requires stricter enforcement of locked main branches and signed Git commits.',
+    costEfficiency: 'Excellent utility-to-cost ratio. Dev team utilizes advanced features; pruning unused seats saves $30/mo.',
+    priority: 'Medium',
+    expectedImpact: 'Guarantees repository branch protection, preventing unintended layout or code regressions.'
+  },
+  { 
+    id: 'gworkspace', 
+    name: 'Google Workspace', 
+    category: 'Productivity', 
+    purpose: 'Corporate Email, Docs & Identity', 
+    cost: 480, 
+    owner: 'Admin Team', 
+    status: 'Active', 
+    recommendation: 'Keep', 
+    notes: 'Core collaboration suite. Requires seat optimization.',
+    usage: 'Facilitates all company emails, calendar scheduling, team documents creation, and corporate user identity management.',
+    strengths: 'Centralized admin controls, SAML single sign-on (SSO) architecture, and collaborative real-time editor engines.',
+    weaknesses: 'Inheritance tree for folder permissions is complex; hard to track cells edits on Shared Google Sheets.',
+    security: 'Lacks globally enforced Multi-Factor Authentication (MFA); guest sharing rules are occasionally left open.',
+    costEfficiency: 'Moderate. Business Lab is paying for 4 Enterprise licenses assigned to inactive consultants and interns.',
+    priority: 'Critical',
+    expectedImpact: 'Locks administrative access, protects correspondence records, and enforces corporate boundaries.'
+  },
+  { 
+    id: 'notion', 
+    name: 'Notion', 
+    category: 'Productivity', 
+    purpose: 'Wiki & Shared Knowledge Base', 
+    cost: 180, 
+    owner: 'Operations', 
+    status: 'Active', 
+    recommendation: 'Integrate', 
+    notes: 'Highly valued, but requires standardized permission sync.',
+    usage: 'Houses the central company documentation, onboarding workflows, Standard Operating Procedures (SOPs), and B2B templates.',
+    strengths: 'Extremely flexible layouts, inline databases with custom views, and intuitive team nesting folders.',
+    weaknesses: 'Search indexing slows under large vault files; permissions are difficult to isolate on sub-pages.',
+    security: 'External guests can download complete databases if the "export workspace" option is not administratively locked.',
+    costEfficiency: 'High value-to-cost return. Essential for operations, but guest seat invitations must be audited.',
+    priority: 'High',
+    expectedImpact: 'Consolidates company wiki, reducing time spent searching for internal onboarding rules by 30%.'
+  },
+  { 
+    id: 'telegram', 
+    name: 'Telegram', 
+    category: 'Communication', 
+    purpose: 'Instant Messaging & Notification Bots', 
+    cost: 0, 
+    owner: 'Marketing', 
+    status: 'Active', 
+    recommendation: 'Keep', 
+    notes: 'Core real-time coordination and customer notify loops.',
+    usage: 'Main channel for real-time team chats, customer support, lead alerts, and automated system notification webhooks.',
+    strengths: 'Instant message delivery, powerful API integrations, and robust automated bot trigger ecosystems.',
+    weaknesses: 'Does not support administrative directory structures; legacy files expire if not backed up.',
+    security: 'Group chats are not end-to-end encrypted by default. Vulnerable to SIM-swap compromises if 2FA is omitted.',
+    costEfficiency: 'Infinite value (free tier). Minor marketing expenses incurred for custom premium channel bots.',
+    priority: 'Medium',
+    expectedImpact: 'Enables high-speed alert loops for lead sourcing and developers, removing email blockages.'
+  },
+  { 
+    id: 'canva', 
+    name: 'Canva', 
+    category: 'Content', 
+    purpose: 'Visual Graphics & Brand Assets', 
+    cost: 80, 
+    owner: 'Design Team', 
+    status: 'Active', 
+    recommendation: 'Keep', 
+    notes: 'Empowers marketing team to publish content rapidly.',
+    usage: 'Used by the marketing team to design graphics, edit promotional PDFs, and construct brand presentation templates.',
+    strengths: 'Huge library of templates, simple drag-and-drop designer canvas, and collaborative team boards.',
+    weaknesses: 'Lacks support for advanced vector file formats; designs can overlap with professional Figma files.',
+    security: 'Assets share links are set to public view for convenience, bypassing tenant domain security.',
+    costEfficiency: 'High. Speeds up graphics production, though seats are currently shared via a single password.',
+    priority: 'Medium',
+    expectedImpact: 'Standardises brand aesthetics and prevents visual marketing inconsistencies.'
+  },
+  { 
+    id: 'claude', 
+    name: 'Claude', 
+    category: 'AI', 
+    purpose: 'Advanced Code & Narrative Engine', 
+    cost: 150, 
+    owner: 'Dev Team', 
+    status: 'Active', 
+    recommendation: 'Integrate', 
+    notes: 'Utilized heavily for content drafting and code reviews.',
+    usage: 'Generates B2B analysis reports, audits codebase structures, writes script drafts, and reviews layout modifications.',
+    strengths: 'Outstanding logical reasoning, large context window, and highly accurate code output formatting.',
+    weaknesses: 'Expensive subscription model; lacks team memory sharing features in basic plan levels.',
+    security: 'Prompts input data must be opt-out from model training to protect internal GO-BRICS code intellectual property.',
+    costEfficiency: 'High return. Developers save several hours weekly, though subscriptions are fragmented.',
+    priority: 'High',
+    expectedImpact: 'Provides secure enterprise AI logic, speeding up manual analysis procedures by 50%.'
+  },
+  { 
+    id: 'chatgpt', 
+    name: 'ChatGPT', 
+    category: 'AI', 
+    purpose: 'B2B Research & Copy Assistance', 
+    cost: 150, 
+    owner: 'Business Lab', 
+    status: 'Active', 
+    recommendation: 'Keep', 
+    notes: 'Ad-hoc query resolution and translation services.',
+    usage: 'Used for ad-hoc coding queries, web research indexing, customer support templates, and multi-language translation.',
+    strengths: 'Rapid response times, extensive plugin marketplace, and broad dataset coverage.',
+    weaknesses: 'Information cutoffs require fact-checking; outputs occasionally contain layout hallucinations.',
+    security: 'Prompt logs must be cleared monthly to guarantee client lead information is not stored permanently.',
+    costEfficiency: 'Moderate. Overlaps with Claude; subscription seat consolidation could save $50/mo.',
+    priority: 'Medium',
+    expectedImpact: 'Acts as secondary validation for code research and strategy formulations.'
+  },
+  { 
+    id: 'antigravity', 
+    name: 'Antigravity', 
+    category: 'Development', 
+    purpose: 'Autonomous Agentic Coding Assistant', 
+    cost: 300, 
+    owner: 'Tech Lead', 
+    status: 'Active', 
+    recommendation: 'Keep', 
+    notes: 'High productivity accelerator for software engineering.',
+    usage: 'Autonomously reads codebases, drafts CSS files, manages layout fixes, and packages build directories.',
+    strengths: 'Excellent terminal sandbox capability, reads large file contents, and creates correct components.',
+    weaknesses: 'Lacks background task visualization; outputs must be reviewed by the tech lead.',
+    security: 'Sandbox terminal executes scripts; commands must be strictly gated to prevent system file changes.',
+    costEfficiency: 'Exceptional. Replaces standard developer contractor hours, saving over $2,000/mo in resources.',
+    priority: 'High',
+    expectedImpact: 'Accelerates development sprints, reducing deployment time of web apps from weeks to days.'
+  },
+  { 
+    id: 'gdrive', 
+    name: 'Google Drive', 
+    category: 'Content', 
+    purpose: 'File Storage & Asset Repository', 
+    cost: 120, 
+    owner: 'Operations', 
+    status: 'Active', 
+    recommendation: 'Integrate', 
+    notes: 'Contains project delivery documents. Review sharing rules.',
+    usage: 'Primary storage for media file deliverables, zip packages, developer templates, and historical client PDFs.',
+    strengths: 'Offline file access, high-capacity storage tiers, and seamless integration with Workspace editors.',
+    weaknesses: 'Search directories become cluttered without standard name conventions.',
+    security: 'Parent directories sharing settings can override sub-folder restrictions, exposing client files.',
+    costEfficiency: 'Good. Necessary for large graphics files, though automated folder sweeps are required.',
+    priority: 'High',
+    expectedImpact: 'Ensures client deliverables are secure and historical records are archived.'
+  },
+  { 
+    id: 'sheets', 
+    name: 'Sheets', 
+    category: 'Operations', 
+    purpose: 'Data Tracking & Metrics Reporting', 
+    cost: 0, 
+    owner: 'Operations', 
+    status: 'Needs Review', 
+    recommendation: 'Integrate', 
+    notes: 'Used for B2B logs; prone to human input errors.',
+    usage: 'Logs B2B financial metrics, counts task completion scores, and keeps records of customer lead scores.',
+    strengths: 'Flexible cell mathematical models, custom pivot tables, and easy sharing controls.',
+    weaknesses: 'No data type restrictions; prone to typing mistakes and formatting inconsistencies.',
+    security: 'Shared sheets expose entire spreadsheets; link leakages compromise critical financial details.',
+    costEfficiency: 'High (free in Workspace), but human calculation verification wastes administrative hours.',
+    priority: 'Critical',
+    expectedImpact: 'Standardises metrics log files, ensuring accurate client reporting.'
+  },
+  { 
+    id: 'forms', 
+    name: 'Forms', 
+    category: 'Operations', 
+    purpose: 'Client Feedback & Lead Sourcing', 
+    cost: 0, 
+    owner: 'Marketing', 
+    status: 'Needs Review', 
+    recommendation: 'Replace', 
+    notes: 'Unintegrated lead capture. Shift to centralized system.',
+    usage: 'Captures new client support request entries, B2B lead generation forms, and project feedback surveys.',
+    strengths: 'Fast to deploy, simple layout form creation, and automatic exports to Google Sheets.',
+    weaknesses: 'Lacks multi-branch conditional question paths and custom branding layout tools.',
+    security: 'Submissions are not encrypted in transit; lacks robust anti-spam validation controls.',
+    costEfficiency: 'Good value (free), but leads to manual email notification delays.',
+    priority: 'High',
+    expectedImpact: 'Reduces intake sorting duration and prevents lead decay.'
+  },
+  { 
+    id: 'discord', 
+    name: 'Discord', 
+    category: 'Communication', 
+    purpose: 'Redundant Chat Workspace', 
+    cost: 40, 
+    owner: 'Marketing', 
+    status: 'Redundant', 
+    recommendation: 'Deprecate', 
+    notes: 'Leftover community workspace. Has overlapping features with Telegram.',
+    usage: 'Legacy community discussions and voice chat rooms, now rarely used due to Telegram transition.',
+    strengths: 'High-quality screen sharing, organized channel directories, and voice channels.',
+    weaknesses: 'High desktop app CPU resources; team members find notifications distracting.',
+    security: 'External developer bot hooks are unmonitored; guest invitations stay active indefinitely.',
+    costEfficiency: 'Poor. Paying for server boost subscriptions that provide no operational value.',
+    priority: 'Medium',
+    expectedImpact: 'Recovers $480/yr in subscription costs and focuses team attention on Telegram.'
+  }
 ];
 
 // Integration Map Layers
@@ -193,40 +400,103 @@ const GAP_FINDINGS = [
   { id: 'gap12', title: 'Lack of API Standardisation', impact: 'Medium', priority: 'Medium', desc: 'Internal webhooks are built using varying payload schemas, making debugging difficult for new developers.', solution: 'Establish a schema guide for webhook triggers and document headers in the dev wiki.' }
 ];
 
-// Roadmap Phases
-const ROADMAP_DATA = {
-  phase1: {
-    title: 'Phase 1: Consolidate & Cleanse',
-    timeline: 'Days 1–30',
-    objectives: ['Consolidate redundant subscriptions', 'Standardise core documentation', 'Enforce access controls'],
-    initiatives: [
-      { id: 'init1', title: 'Decommission Discord Workspace', priority: 'High', effort: 'Low', impact: 'Medium', owner: 'Marketing', timeline: 'Days 1–10' },
-      { id: 'init2', title: 'Force Google SSO & 2FA', priority: 'Critical', effort: 'Medium', impact: 'High', owner: 'Admin Team', timeline: 'Days 5–20' },
-      { id: 'init3', title: 'Establish Notion Knowledge Standard', priority: 'High', effort: 'Medium', impact: 'High', owner: 'Operations', timeline: 'Days 10–30' },
-      { id: 'init4', title: 'Perform Drive Sharing Audit', priority: 'High', effort: 'Low', impact: 'High', owner: 'Admin Team', timeline: 'Days 1–15' }
-    ]
+// Expanded 6-Sprint Roadmap Data
+const ROADMAP_SPRINTS = {
+  sprint1: {
+    title: 'Sprint 1: Access Consolidation & Cleanse',
+    timeline: 'Days 1–15',
+    objectives: 'Decommission redundant systems and lock down identity protocols across core SaaS panels.',
+    deliverables: [
+      'Complete deactivation of legacy Discord workspace and transfer active client threads to Telegram.',
+      'Enforce mandatory multi-factor authentication (MFA) on Google Workspace administrator controls.',
+      'Establish IP restrictions for active developer access panels in GitHub.'
+    ],
+    effort: 'Low',
+    priority: 'Critical',
+    owner: 'Admin Team',
+    implementationTime: '10 Days',
+    measurableImpact: 'Immediate reduction of $480/yr in subscription boosters; blocks credential hijacking entry points.',
+    successMetrics: '100% of active users enrolled in hardware MFA; Discord workspace completely deprecated.'
   },
-  phase2: {
-    title: 'Phase 2: Automate & Secure',
-    timeline: 'Days 31–60',
-    objectives: ['Deploy webhook automation', 'Introduce password vaulting', 'Optimize data flows'],
-    initiatives: [
-      { id: 'init5', title: 'Deploy Bitwarden Enterprise', priority: 'High', effort: 'Low', impact: 'High', owner: 'Operations', timeline: 'Days 31–40' },
-      { id: 'init6', title: 'Integrate Forms with CRM/Sheets', priority: 'High', effort: 'Medium', impact: 'High', owner: 'Dev Team', timeline: 'Days 35–50' },
-      { id: 'init7', title: 'Implement AI Lead Scoring Script', priority: 'Medium', effort: 'Medium', impact: 'High', owner: 'Tech Lead', timeline: 'Days 40–60' },
-      { id: 'init8', title: 'Standardise Webhook API Schemas', priority: 'Medium', effort: 'Low', impact: 'Medium', owner: 'Tech Lead', timeline: 'Days 45–55' }
-    ]
+  sprint2: {
+    title: 'Sprint 2: Central Knowledge Architecture',
+    timeline: 'Days 16–30',
+    objectives: 'Standardise corporate wikis, documentation files, and project templates in a centralized vault.',
+    deliverables: [
+      'Deploy standardized documentation structures and folder hierarchies inside Notion.',
+      'Consolidate historical support PDFs from local drives into a locked Google Drive asset vault.',
+      'Configure read-only client directories with restricted export rules.'
+    ],
+    effort: 'Medium',
+    priority: 'High',
+    owner: 'Operations',
+    implementationTime: '12 Days',
+    measurableImpact: 'Reduces time spent searching for B2B deliverables guidelines and standard operating procedures (SOPs).',
+    successMetrics: 'All onboarding guides and project metrics sheets cataloged in Notion; public export controls disabled.'
   },
-  phase3: {
-    title: 'Phase 3: Scale & Monitor',
-    timeline: 'Days 61–90',
-    objectives: ['Unify AI tools', 'Establish metrics reporting', 'Deploy disaster protocol'],
-    initiatives: [
-      { id: 'init9', title: 'Consolidate AI Seats (Claude Enterprise)', priority: 'Medium', effort: 'Medium', impact: 'High', owner: 'Admin Team', timeline: 'Days 61–75' },
-      { id: 'init10', title: 'Deploy Dashboard Analytics Interface', priority: 'High', effort: 'High', impact: 'High', owner: 'Dev Team', timeline: 'Days 65–85' },
-      { id: 'init11', title: 'Draft & Test Incident Runbook', priority: 'High', effort: 'Medium', impact: 'High', owner: 'Tech Lead', timeline: 'Days 70–90' },
-      { id: 'init12', title: 'Setup Monthly Licensing Audit Flow', priority: 'Low', effort: 'Low', impact: 'Medium', owner: 'Operations', timeline: 'Days 80–90' }
-    ]
+  sprint3: {
+    title: 'Sprint 3: Credentials Vaulting & Storage Sweep',
+    timeline: 'Days 31–45',
+    objectives: 'Eliminate plain-text passwords sharing and run a strict permissions sweep on file repositories.',
+    deliverables: [
+      'Roll out corporate password manager licenses (Bitwarden) for all active staff members.',
+      'Conduct absolute audit of Google Drive shared links, stripping anonymous edit access.',
+      'Remove former contractors and interns from active SaaS seat billing accounts.'
+    ],
+    effort: 'Medium',
+    priority: 'High',
+    owner: 'Operations',
+    implementationTime: '15 Days',
+    measurableImpact: 'Prevents credential leaks on shared Canva/ChatGPT accounts and locks external access to corporate assets.',
+    successMetrics: '0 shared passwords in email files; all file links restricted strictly to whitelisted domain emails.'
+  },
+  sprint4: {
+    title: 'Sprint 4: Sourcing & Intake Automation',
+    timeline: 'Days 46–60',
+    objectives: 'Connect lead capture forms to back-office tracking logs via automated webhook pipelines.',
+    deliverables: [
+      'Build API webhook routing scripts using Make/Zapier between intake Forms and Sheets.',
+      'Establish automatic lead-scoring email notifications on Telegram for operations leads.',
+      'Configure automatic validation rules on Sheets cells to block text entry errors.'
+    ],
+    effort: 'Medium',
+    priority: 'High',
+    owner: 'Dev Team',
+    implementationTime: '14 Days',
+    measurableImpact: 'Decreases intake processing time by 75% and saves operations team members 4 hours of weekly data entry.',
+    successMetrics: '100% of client forms automatically processed and tagged in Sheets database within 5 seconds.'
+  },
+  sprint5: {
+    title: 'Sprint 5: AI Governance & Console Consolidation',
+    timeline: 'Days 61–75',
+    objectives: 'Standardise corporate licenses for AI tools and ensure data privacy compliance.',
+    deliverables: [
+      'Establish a unified Claude Enterprise workspace and merge fragmented developer seats.',
+      'Opt-out all corporate OpenAI and Anthropic API accounts from AI context training loops.',
+      'Publish secure prompt templates and code review directives in the Notion wiki.'
+    ],
+    effort: 'Low',
+    priority: 'Medium',
+    owner: 'Tech Lead',
+    implementationTime: '8 Days',
+    measurableImpact: 'Secures proprietary GO-BRICS code from public model leaks and saves $120/mo in subscription overlaps.',
+    successMetrics: 'All developer seats unified under a single parent account; training opt-out verification logs saved.'
+  },
+  sprint6: {
+    title: 'Sprint 6: Disaster Recovery & Audit Workflows',
+    timeline: 'Days 76–90',
+    objectives: 'Draft operational backup manuals and implement recurring compliance checks.',
+    deliverables: [
+      'Establish the Shungite Shield Incident Runbook outlining emergency communication tools.',
+      'Deploy automatic script backups from active Sheets to a secure server monthly.',
+      'Implement a monthly automated license audit checklist in the admin dashboard.'
+    ],
+    effort: 'Medium',
+    priority: 'High',
+    owner: 'Tech Lead',
+    implementationTime: '15 Days',
+    measurableImpact: 'Guarantees continuous uptime during vendor disruptions and maintains cost efficiency.',
+    successMetrics: 'Successful disaster recovery backup simulation test completed; checklist verified by operations leads.'
   }
 };
 
@@ -267,7 +537,14 @@ export default function App() {
   const [gapPriorityFilter, setGapPriorityFilter] = useState('All');
 
   // Roadmap task completion toggles
-  const [completedRoadmapTasks, setCompletedRoadmapTasks] = useState({});
+  const [completedSprints, setCompletedSprints] = useState({
+    sprint1: false,
+    sprint2: false,
+    sprint3: false,
+    sprint4: false,
+    sprint5: false,
+    sprint6: false
+  });
 
   // Navigation tab view state tracking for compliance panel checklist
   const [visitedTabs, setVisitedTabs] = useState({
@@ -293,7 +570,7 @@ export default function App() {
   const getDynamicOptimizedCost = () => {
     let cost = totalCostBefore;
     if (costOptimizations.optDiscord) cost -= 40;     // Discord decommission
-    if (costOptimizations.optForms) cost -= 20;       // Form replacement
+    if (costOptimizations.optForms) cost -= 20;       // Form replacement (estimated savings)
     if (costOptimizations.optNotion) cost -= 80;      // Notion seat audit
     if (costOptimizations.optAI) cost -= 100;         // AI consolidation
     if (costOptimizations.optWorkspace) cost -= 120;  // Google Workspace license sweep
@@ -327,10 +604,9 @@ export default function App() {
   const costScore = getDynamicCostScore();
 
   // Dynamic Roadmap completion score
-  const getRoadmapCompletion = (phase) => {
-    const phaseTasks = ROADMAP_DATA[phase].initiatives;
-    const completed = phaseTasks.filter(t => completedRoadmapTasks[t.id]).length;
-    return Math.round((completed / phaseTasks.length) * 100);
+  const getRoadmapProgressPercent = () => {
+    const completed = Object.values(completedSprints).filter(Boolean).length;
+    return Math.round((completed / 6) * 100);
   };
 
   // Filter tools
@@ -360,9 +636,9 @@ export default function App() {
     setCostOptimizations(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
-  // Handle Roadmap task toggle
-  const toggleRoadmapTask = (id) => {
-    setCompletedRoadmapTasks(prev => ({ ...prev, [id]: !prev[id] }));
+  // Handle Roadmap sprint toggle
+  const toggleSprint = (key) => {
+    setCompletedSprints(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
   // Quick action: Deploy all roadmap tasks or optimizations
@@ -382,14 +658,14 @@ export default function App() {
       sec5: true,
       sec6: true
     });
-    // Set all roadmap initiatives as checked
-    const allRoadmapIds = {};
-    Object.values(ROADMAP_DATA).forEach(phase => {
-      phase.initiatives.forEach(init => {
-        allRoadmapIds[init.id] = true;
-      });
+    setCompletedSprints({
+      sprint1: true,
+      sprint2: true,
+      sprint3: true,
+      sprint4: true,
+      sprint5: true,
+      sprint6: true
     });
-    setCompletedRoadmapTasks(allRoadmapIds);
   };
 
   // Printing functions
@@ -451,7 +727,7 @@ export default function App() {
     securityAssessmentIncluded: visitedTabs.security && Object.values(completedSecurityItems).some(Boolean),
     redundanciesIdentified: tools.some(t => t.status === 'Redundant'),
     integrationAnalysisIncluded: visitedTabs.integration,
-    roadmapCompleted: visitedTabs.roadmap && Object.values(completedRoadmapTasks).some(Boolean),
+    roadmapCompleted: visitedTabs.roadmap && Object.values(completedSprints).some(Boolean),
     executiveRecommendationsIncluded: visitedTabs.recommendations,
     gradeASubmissionReady: visitedTabs.dashboard && visitedTabs.inventory && visitedTabs.integration && visitedTabs.security && visitedTabs.cost && visitedTabs.gaps && visitedTabs.roadmap && visitedTabs.recommendations
   };
@@ -484,7 +760,7 @@ export default function App() {
                   <span className="text-gray-600">|</span>
                   <span className="flex items-center text-gray-400">
                     <Layers className="w-3 h-3 text-[#00FF41] mr-1" />
-                    Shungite Shield Infrastructure Portal
+                    Consulting Audit & 90-Day Roadmap (12-Page Equivalent)
                   </span>
                 </div>
               </div>
@@ -530,7 +806,7 @@ export default function App() {
         </header>
 
         {/* Tabbed Navigation Bar */}
-        <nav className="border-b border-[#2E2E2E] bg-[#0E0E0E] px-4 md:px-6 sticky top-[73px] lg:top-[73px] z-40 overflow-x-auto scrollbar-none">
+        <nav className="border-b border-[#2E2E2E] bg-[#0E0E0E] px-4 md:px-6 sticky top-[73px] lg:top-[73px] z-45 overflow-x-auto scrollbar-none">
           <div className="max-w-7xl mx-auto flex">
             {[
               { id: 'dashboard', label: 'Executive Dashboard', icon: <Activity className="w-4 h-4 mr-2" /> },
@@ -859,12 +1135,12 @@ export default function App() {
                     </table>
                   </div>
 
-                  {/* Right Details Panel */}
+                  {/* Right Details Panel - Extended Consulting Review */}
                   {selectedTool && (
-                    <div className="w-full lg:w-80 bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl p-5 shadow-lg h-fit shrink-0 select-none">
+                    <div className="w-full lg:w-96 bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl p-5 shadow-lg h-[620px] overflow-y-auto shrink-0 select-text">
                       <div className="flex justify-between items-start border-b border-[#2E2E2E] pb-3 mb-4">
                         <div>
-                          <h4 className="text-md font-extrabold text-white">{selectedTool.name}</h4>
+                          <h4 className="text-sm font-extrabold text-white">{selectedTool.name}</h4>
                           <span className="text-[10px] text-gray-500 uppercase">{selectedTool.category} Layer</span>
                         </div>
                         <span className={`px-2 py-0.5 rounded text-[9px] font-bold ${
@@ -878,39 +1154,68 @@ export default function App() {
 
                       <div className="space-y-4 text-xs">
                         <div>
-                          <div className="text-[10px] text-gray-500 uppercase font-bold">Purpose</div>
-                          <div className="text-gray-300 mt-1 font-semibold">{selectedTool.purpose}</div>
+                          <div className="text-[9px] text-[#00FF41] uppercase font-bold tracking-wider">1. Core Purpose</div>
+                          <div className="text-gray-300 mt-1 font-medium">{selectedTool.purpose}</div>
                         </div>
 
                         <div>
-                          <div className="text-[10px] text-gray-500 uppercase font-bold">Monthly Spend</div>
-                          <div className="text-[#00FF41] mt-1 font-mono font-bold text-sm">${selectedTool.cost} / mo</div>
+                          <div className="text-[9px] text-[#00FF41] uppercase font-bold tracking-wider">2. Current Usage Patterns</div>
+                          <div className="text-gray-400 mt-1 leading-relaxed">{selectedTool.usage}</div>
                         </div>
 
-                        <div>
-                          <div className="text-[10px] text-gray-500 uppercase font-bold">Admin Owner</div>
-                          <div className="text-gray-300 mt-1">{selectedTool.owner}</div>
-                        </div>
-
-                        <div className="p-3 bg-[#111] rounded-lg border border-[#2E2E2E]">
-                          <div className="text-[10px] text-[#00FF41] uppercase font-bold flex items-center gap-1.5">
-                            <Info className="w-3 h-3" />
-                            Audit Finding
+                        <div className="grid grid-cols-2 gap-3 bg-[#141414] p-3 rounded-lg border border-[#2E2E2E]">
+                          <div>
+                            <div className="text-[9px] text-green-400 font-bold uppercase tracking-wider">Strengths</div>
+                            <div className="text-[10px] text-gray-300 mt-1">{selectedTool.strengths}</div>
                           </div>
-                          <p className="text-gray-400 mt-1.5 text-[11px] leading-relaxed">
-                            {selectedTool.notes}
-                          </p>
+                          <div>
+                            <div className="text-[9px] text-red-400 font-bold uppercase tracking-wider">Weaknesses</div>
+                            <div className="text-[10px] text-gray-300 mt-1">{selectedTool.weaknesses}</div>
+                          </div>
                         </div>
 
-                        <div className="pt-2">
-                          <div className="text-[10px] text-gray-500 uppercase font-bold mb-1.5">Consulting Action</div>
-                          <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold text-center w-full ${
-                            selectedTool.recommendation === 'Keep' ? 'bg-[#00FF41]/15 text-[#00FF41] border border-[#00FF41]/30' :
-                            selectedTool.recommendation === 'Replace' ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30' :
-                            selectedTool.recommendation === 'Integrate' ? 'bg-indigo-500/15 text-indigo-400 border border-indigo-500/30' :
-                            'bg-red-500/15 text-red-400 border border-red-500/30'
+                        <div>
+                          <div className="text-[9px] text-[#00FF41] uppercase font-bold tracking-wider">3. Security & Vulnerability Analysis</div>
+                          <p className="text-gray-400 mt-1 leading-relaxed">{selectedTool.security}</p>
+                        </div>
+
+                        <div className="flex justify-between items-center bg-[#141414] p-2.5 rounded-lg border border-[#252525]">
+                          <div>
+                            <span className="text-[9px] text-gray-500 uppercase block">Cost Efficiency</span>
+                            <span className="text-gray-300 font-medium text-[10px]">{selectedTool.costEfficiency}</span>
+                          </div>
+                          <div className="text-right shrink-0">
+                            <span className="text-[9px] text-gray-500 uppercase block">Monthly Spend</span>
+                            <span className="text-[#00FF41] font-mono font-bold">${selectedTool.cost}/mo</span>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3 pt-2 border-t border-[#252525]">
+                          <div>
+                            <span className="text-[9px] text-gray-500 uppercase block mb-1">Priority</span>
+                            <span className={`inline-block px-2.5 py-0.5 rounded text-[10px] font-bold ${
+                              selectedTool.priority === 'Critical' || selectedTool.priority === 'High' 
+                                ? 'bg-red-950 text-red-400 border border-red-900' 
+                                : 'bg-gray-800 text-gray-300 border border-gray-700'
+                            }`}>
+                              {selectedTool.priority} Priority
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-[9px] text-gray-500 uppercase block mb-1">Expected Impact</span>
+                            <span className="text-gray-300 font-medium block text-[10px] leading-tight">{selectedTool.expectedImpact}</span>
+                          </div>
+                        </div>
+
+                        <div className="pt-3">
+                          <span className="text-[9px] text-gray-500 uppercase block mb-1.5">Action Plan</span>
+                          <span className={`inline-block px-3 py-1.5 rounded-lg text-xs font-bold text-center w-full ${
+                            selectedTool.recommendation === 'Keep' ? 'bg-[#00FF41]/10 text-[#00FF41] border border-[#00FF41]/30' :
+                            selectedTool.recommendation === 'Replace' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30' :
+                            selectedTool.recommendation === 'Integrate' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/30' :
+                            'bg-red-500/10 text-red-400 border border-red-500/30'
                           }`}>
-                            {selectedTool.recommendation}
+                            {selectedTool.recommendation} Tool
                           </span>
                         </div>
                       </div>
@@ -1317,91 +1622,94 @@ export default function App() {
               </div>
             )}
 
-            {/* TAB 7 — 90-DAY ROADMAP */}
+            {/* TAB 7 — 90-DAY ROADMAP (6 Sprints Layout) */}
             {activeTab === 'roadmap' && (
               <div className="space-y-6 animate-fade-in">
                 
                 {/* Horizontal progress bar */}
                 <div className="bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl p-5 shadow-lg">
                   <div className="flex justify-between items-center mb-3 text-xs font-bold text-gray-200">
-                    <span>90-Day Implementation Timeline Tracker</span>
-                    <span className="text-[#00FF41] font-mono">
-                      Overall roadmap progress: {
-                        Math.round(
-                          (Object.values(completedRoadmapTasks).filter(Boolean).length / 12) * 100
-                        ) || 0
-                      }%
+                    <span>90-Day Consulting Roadmap Progression Tracker (6 Sprints)</span>
+                    <span className="text-[#00FF41] font-mono font-bold">
+                      Roadmap Completion Score: {getRoadmapProgressPercent()}%
                     </span>
                   </div>
                   <div className="w-full bg-[#111] rounded-full h-2.5 overflow-hidden border border-[#2E2E2E]">
                     <div 
                       className="bg-[#00FF41] h-full transition-all duration-300 ease-out" 
                       style={{ 
-                        width: `${Math.round((Object.values(completedRoadmapTasks).filter(Boolean).length / 12) * 100)}%` 
+                        width: `${getRoadmapProgressPercent()}%` 
                       }}
                     ></div>
                   </div>
                 </div>
 
-                {/* Timeline Grid (Phases) */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  {Object.entries(ROADMAP_DATA).map(([phaseKey, phase]) => (
-                    <div key={phaseKey} className="bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl p-5 flex flex-col justify-between shadow-lg">
+                {/* Sprints Grid Layout (6 columns/cards) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {Object.entries(ROADMAP_SPRINTS).map(([sprintKey, sprint]) => (
+                    <div key={sprintKey} className="bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl p-5 flex flex-col justify-between shadow-lg hover:border-gray-600 transition-all">
                       
-                      <div className="space-y-4">
-                        {/* Title header */}
-                        <div className="flex justify-between items-center border-b border-[#2E2E2E] pb-3">
+                      <div className="space-y-3">
+                        {/* Sprint Title & Header */}
+                        <div className="flex justify-between items-start border-b border-[#2E2E2E] pb-2.5">
                           <div>
-                            <h5 className="text-xs md:text-sm font-bold text-white">{phase.title}</h5>
-                            <span className="text-[10px] text-gray-500 font-semibold">{phase.timeline}</span>
+                            <h5 className="text-[11px] font-extrabold text-[#00FF41] uppercase tracking-wider">{sprintKey.toUpperCase()}</h5>
+                            <h6 className="text-xs font-bold text-white leading-tight mt-0.5">{sprint.title}</h6>
+                            <span className="text-[9px] text-gray-500 font-semibold block mt-0.5">{sprint.timeline} ({sprint.implementationTime})</span>
                           </div>
-                          <span className="text-[10px] bg-[#00FF41]/10 text-[#00FF41] px-2 py-0.5 rounded font-mono font-bold">
-                            {getRoadmapCompletion(phaseKey)}% Completed
+                          <span className={`text-[8px] font-bold px-1.5 py-0.2 rounded border ${
+                            sprint.priority === 'Critical' 
+                              ? 'bg-red-500/10 border-red-500/30 text-red-400' 
+                              : 'bg-[#111] border-[#252525] text-gray-400'
+                          }`}>
+                            {sprint.priority}
                           </span>
                         </div>
 
-                        {/* Objectives List */}
-                        <ul className="space-y-1.5 pl-4 list-disc text-[10px] text-gray-400">
-                          {phase.objectives.map((obj, i) => (
-                            <li key={i}>{obj}</li>
-                          ))}
-                        </ul>
+                        {/* Objectives Summary */}
+                        <div className="p-2.5 bg-[#141414] border border-[#252525] rounded text-[10px] text-gray-300 leading-relaxed">
+                          <strong>Objective:</strong> {sprint.objectives}
+                        </div>
 
-                        {/* Initiatives Checklist */}
-                        <div className="space-y-3 pt-3">
-                          {phase.initiatives.map((init) => (
-                            <div
-                              key={init.id}
-                              onClick={() => toggleRoadmapTask(init.id)}
-                              className={`p-3 rounded-lg border transition-all cursor-pointer select-none flex items-start gap-2.5 ${
-                                completedRoadmapTasks[init.id]
-                                  ? 'bg-[#00FF41]/5 border-[#00FF41]/40'
-                                  : 'bg-[#111] border-[#2E2E2E] hover:border-gray-600'
-                              }`}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={completedRoadmapTasks[init.id] || false}
-                                onChange={() => {}} // handled by click
-                                className="mt-0.5 accent-[#00FF41]"
-                              />
-                              <div className="flex-grow">
-                                <div className="text-[11px] font-bold text-white leading-tight">{init.title}</div>
-                                
-                                <div className="flex gap-2 mt-1.5 text-[8px] font-semibold text-gray-500">
-                                  <span>Owner: {init.owner}</span>
-                                  <span>•</span>
-                                  <span className={init.priority === 'Critical' || init.priority === 'High' ? 'text-red-400' : 'text-gray-500'}>
-                                    Priority: {init.priority}
-                                  </span>
-                                  <span>•</span>
-                                  <span>Impact: {init.impact}</span>
-                                </div>
-                              </div>
+                        {/* Deliverables checklist */}
+                        <div className="space-y-1.5 pl-3 text-[10px] text-gray-400">
+                          <div className="font-bold text-gray-500 text-[9px] uppercase tracking-wider mb-1">Key Deliverables:</div>
+                          {sprint.deliverables.map((del, idx) => (
+                            <div key={idx} className="flex items-start gap-1.5">
+                              <span className="text-[#00FF41] shrink-0 font-mono">•</span>
+                              <span className="leading-tight">{del}</span>
                             </div>
                           ))}
                         </div>
+
+                        {/* Sprint Metrics */}
+                        <div className="border-t border-[#252525] pt-2.5 space-y-1.5 text-[9px] text-gray-500 font-semibold select-text">
+                          <div className="flex justify-between">
+                            <span>Sprint Owner:</span>
+                            <span className="text-gray-300">{sprint.owner}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Effort / Time:</span>
+                            <span className="text-gray-300">{sprint.effort} / {sprint.implementationTime}</span>
+                          </div>
+                          <div className="text-[9px] leading-snug">
+                            <span className="text-[#00FF41] font-bold uppercase tracking-wider block">Expected Impact</span>
+                            <p className="text-gray-400 font-normal mt-0.5 leading-relaxed">{sprint.measurableImpact}</p>
+                          </div>
+                        </div>
                       </div>
+
+                      {/* Bottom Toggle switch */}
+                      <button
+                        onClick={() => toggleSprint(sprintKey)}
+                        className={`mt-4 px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all cursor-pointer w-full text-center ${
+                          completedSprints[sprintKey]
+                            ? 'bg-[#00FF41]/20 border-[#00FF41]/40 text-[#00FF41]'
+                            : 'bg-[#262626] border-[#3E3E3E] text-gray-300 hover:border-gray-500'
+                        }`}
+                      >
+                        {completedSprints[sprintKey] ? '✓ Sprint Complete' : 'Mark Sprint Complete'}
+                      </button>
 
                     </div>
                   ))}
@@ -1410,113 +1718,231 @@ export default function App() {
               </div>
             )}
 
-            {/* TAB 8 — FINAL RECOMMENDATIONS */}
+            {/* TAB 8 — FINAL RECOMMENDATIONS (Expanded Deloitte/McKinsey Report) */}
             {activeTab === 'recommendations' && (
-              <div className="bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl p-6 md:p-8 space-y-6 shadow-2xl animate-fade-in text-gray-300 leading-relaxed text-xs">
+              <div className="bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl p-6 md:p-8 space-y-8 shadow-2xl animate-fade-in text-gray-300 leading-relaxed text-xs select-text">
                 
-                {/* McKinsey Banner Header */}
-                <div className="border-b border-[#333] pb-6 mb-6">
+                {/* Deloitte Banner Header */}
+                <div className="border-b-2 border-white pb-6 mb-6">
                   <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-wider">
-                    Executive Consulting Report
+                    Enterprise Technology Infrastructure Assessment
                   </h3>
                   <div className="text-gray-500 text-[10px] uppercase font-bold tracking-wider mt-1">
-                    Prepared for GO-BRICS Business Lab & Shungite Shield | Technology Department
+                    GO-BRICS Business Lab & Shungite Shield | Governance Report & Transition Roadmap
                   </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-8">
                   
-                  {/* Section 1 */}
+                  {/* Chapter 1 */}
                   <div>
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2 border-b border-[#2a2a2a] pb-1">
-                      1. Current State Summary
+                    <h4 className="text-sm font-extrabold text-white uppercase tracking-wider mb-2 border-b border-[#333] pb-1.5 flex items-center gap-2">
+                      <span className="text-[#00FF41]">1.0</span> Executive Summary & Context
                     </h4>
-                    <p>
-                      The current technological infrastructure of the GO-BRICS Business Lab represents a highly agile, modern hybrid-cloud and AI ecosystem. Leveraging 12 distinct SaaS licenses across design, coding assistants, project databases, and communication layers, operations are dynamic but fragmented. There is significant overlapping utility (e.g. Discord and Telegram both serving communication needs) and loose governance regarding password storage and Google Drive access permissions. Decommissioning duplicate tools and standardising team knowledge repositories will immediately lock down vulnerabilities and prune licensing costs by 24%.
+                    <p className="leading-relaxed">
+                      GO-BRICS Business Lab operates in a high-demand, high-security B2B environment. This technology audit, aligned with the Shungite Shield security matrix, establishes a thorough baseline of our 12 active SaaS platforms. Our baseline findings indicate that while developer velocity is extremely high (accelerated by Antigravity and GitHub pipelines), administrative governance, data retention, and user credentials protocols are fragmented. Implementing this strategic audit framework blocks active security threats, recovers $520/month in licensing seat wastes, and transitions the organization to a secure target state.
                     </p>
                   </div>
 
-                  {/* Section 2 */}
+                  {/* Chapter 2 */}
                   <div>
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2 border-b border-[#2a2a2a] pb-1">
-                      2. Key Risks Identified
+                    <h4 className="text-sm font-extrabold text-white uppercase tracking-wider mb-2 border-b border-[#333] pb-1.5 flex items-center gap-2">
+                      <span className="text-[#00FF41]">2.0</span> SWOT Analysis of Technology Infrastructure
                     </h4>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li><strong className="text-white">Credentials Leakage:</strong> Lack of forced corporate single sign-on (SSO) and reliance on shared credentials for premium Canva and ChatGPT licenses.</li>
-                      <li><strong className="text-white">Loss of Data Integrity:</strong> Reliance on custom webhooks and unvalidated manual Google Sheets databases for client lead tracking, introducing validation vulnerabilities.</li>
-                      <li><strong className="text-white">Access Governance:</strong> Loose sharing links on Google Drive set to public view for administrative convenience, bypassing access controls.</li>
-                    </ul>
-                  </div>
-
-                  {/* Section 3 */}
-                  <div>
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2 border-b border-[#2a2a2a] pb-1">
-                      3. Major Opportunities
-                    </h4>
-                    <p>
-                      The highest yield improvements reside in developer workflow automation and AI licensing consolidation. By deploying integrated API loops between client forms and developer tasks, manually executed coordination processes can be reduced by 6 hours weekly. Standardising team AI subscriptions onto a corporate Claude organization structure enforces security boundaries while lowering licensing costs.
-                    </p>
-                  </div>
-
-                  {/* Section 4 */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                    <div className="p-4 bg-[#111] border border-[#2E2E2E] rounded-lg">
-                      <h5 className="font-bold text-white mb-2 uppercase tracking-wide text-[10px] text-[#00FF41]">4. Quick Wins (Days 1–30)</h5>
-                      <ul className="list-disc pl-4 space-y-1 text-gray-400 text-[11px]">
-                        <li>Decommission the redundant Discord workspace and focus B2B communication on Telegram channels.</li>
-                        <li>Force mandatory Google SSO and 2FA across all administrative accounts.</li>
-                        <li>Audit Google Drive sharing folders and strip public invite links.</li>
-                      </ul>
-                    </div>
-
-                    <div className="p-4 bg-[#111] border border-[#2E2E2E] rounded-lg">
-                      <h5 className="font-bold text-white mb-2 uppercase tracking-wide text-[10px] text-[#00FF41]">5. Medium-Term Improvements (Days 31–60)</h5>
-                      <ul className="list-disc pl-4 space-y-1 text-gray-400 text-[11px]">
-                        <li>Deploy a corporate password vault manager to eradicate shared credentials.</li>
-                        <li>Build automated API scripts using Claude to automatically score B2B leads.</li>
-                        <li>Establish a secure repository wiki on Notion to house system runbooks.</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* Section 6 */}
-                  <div>
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2 border-b border-[#2a2a2a] pb-1">
-                      6. Long-Term Vision
-                    </h4>
-                    <p>
-                      The ultimate objective is a fully centralized, compliance-gated digital workplace. By integrating all operational dashboards under custom React reporting systems, the GO-BRICS brand achieves consulting-grade transparency. Furthermore, implementing the "Shungite Shield Incident Runbook" guarantees complete operational backup coverage, insulating the business lab against infrastructure outages or data leaks.
-                    </p>
-                  </div>
-
-                  {/* Section 7 */}
-                  <div>
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2 border-b border-[#2a2a2a] pb-1">
-                      7. Expected Outcomes
-                    </h4>
-                    <div className="grid grid-cols-3 gap-4 text-center py-2">
-                      <div className="p-3 bg-[#151515] border border-[#2E2E2E] rounded-lg">
-                        <div className="text-base font-bold text-[#00FF41] font-mono">-$520 / mo</div>
-                        <div className="text-[9px] text-gray-400 mt-1 uppercase font-bold">Licensing Reduction</div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                      <div className="p-3 bg-[#141414] border border-[#252525] rounded-lg">
+                        <span className="text-[9px] uppercase font-bold text-green-400 block mb-1">Strengths</span>
+                        <ul className="list-disc pl-4 space-y-1 text-gray-400">
+                          <li>Excellent developer throughput using Antigravity AI coding agent.</li>
+                          <li>Rapid group communication loops via custom Telegram API bots.</li>
+                          <li>Centralised code repository structures built on protected GitHub main branches.</li>
+                        </ul>
                       </div>
-                      <div className="p-3 bg-[#151515] border border-[#2E2E2E] rounded-lg">
-                        <div className="text-base font-bold text-[#00FF41] font-mono">+12%</div>
-                        <div className="text-[9px] text-gray-400 mt-1 uppercase font-bold">Security Compliance</div>
+
+                      <div className="p-3 bg-[#141414] border border-[#252525] rounded-lg">
+                        <span className="text-[9px] uppercase font-bold text-red-400 block mb-1">Weaknesses</span>
+                        <ul className="list-disc pl-4 space-y-1 text-gray-400">
+                          <li>Fragmented knowledge repositories spread across Drive and private Notion workspaces.</li>
+                          <li>Unintegrated forms leads, resulting in manual lead sorting.</li>
+                          <li>Prone to manual calculations and cell overrides inside Google Sheets.</li>
+                        </ul>
                       </div>
-                      <div className="p-3 bg-[#151515] border border-[#2E2E2E] rounded-lg">
-                        <div className="text-base font-bold text-[#00FF41] font-mono">6 hrs / wk</div>
-                        <div className="text-[9px] text-gray-400 mt-1 uppercase font-bold">Developer Hours Saved</div>
+
+                      <div className="p-3 bg-[#141414] border border-[#252525] rounded-lg">
+                        <span className="text-[9px] uppercase font-bold text-indigo-400 block mb-1">Opportunities</span>
+                        <ul className="list-disc pl-4 space-y-1 text-gray-400">
+                          <li>Automation of Form entries directly to Sheets via Make webhooks.</li>
+                          <li>Centralisation of corporate software logins under Google SSO.</li>
+                          <li>AI lead scoring scripts using secure Claude Enterprise API panels.</li>
+                        </ul>
+                      </div>
+
+                      <div className="p-3 bg-[#141414] border border-[#252525] rounded-lg">
+                        <span className="text-[9px] uppercase font-bold text-amber-500 block mb-1">Threats</span>
+                        <ul className="list-disc pl-4 space-y-1 text-gray-400">
+                          <li>Credential leakages from shared Canva/ChatGPT passwords.</li>
+                          <li>Unauthorized data access due to public sharing configurations on Drive directories.</li>
+                          <li>Loss of B2B client details in transit from unsecured intake pages.</li>
+                        </ul>
                       </div>
                     </div>
                   </div>
 
-                  {/* Section 8 */}
-                  <div className="p-4 bg-[#00FF41]/5 border border-[#00FF41]/30 rounded-lg">
+                  {/* Chapter 3 */}
+                  <div>
+                    <h4 className="text-sm font-extrabold text-white uppercase tracking-wider mb-2 border-b border-[#333] pb-1.5 flex items-center gap-2">
+                      <span className="text-[#00FF41]">3.0</span> Consolidated Licensing Spend & Savings Forecast
+                    </h4>
+                    <p className="mb-3">
+                      Decommissioning redundant systems and pruning excess seats immediately recovers capital. Below is our target state spending ledger:
+                    </p>
+                    <table className="min-w-full divide-y divide-[#2E2E2E] text-left text-[11px] border border-[#2E2E2E] rounded-lg overflow-hidden">
+                      <thead className="bg-[#111] text-gray-400">
+                        <tr>
+                          <th className="p-2">Category</th>
+                          <th className="p-2">Current Monthly Spend</th>
+                          <th className="p-2">Target Monthly Spend</th>
+                          <th className="p-2">Monthly Savings</th>
+                          <th className="p-2">Primary Action Required</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#2E2E2E]">
+                        <tr>
+                          <td className="p-2 font-bold">Productivity</td>
+                          <td className="p-2 font-mono">$660</td>
+                          <td className="p-2 font-mono">$460</td>
+                          <td className="p-2 font-mono text-[#00FF41]">-$200</td>
+                          <td className="p-2 text-gray-400">Sweep Workspace accounts & Notion seats</td>
+                        </tr>
+                        <tr>
+                          <td className="p-2 font-bold">Development</td>
+                          <td className="p-2 font-mono">$420</td>
+                          <td className="p-2 font-mono">$420</td>
+                          <td className="p-2 font-mono">$0</td>
+                          <td className="p-2 text-gray-400">Retain GitHub and Antigravity</td>
+                        </tr>
+                        <tr>
+                          <td className="p-2 font-bold">Communication</td>
+                          <td className="p-2 font-mono">$40</td>
+                          <td className="p-2 font-mono">$0</td>
+                          <td className="p-2 font-mono text-[#00FF41]">-$40</td>
+                          <td className="p-2 text-gray-400">Decommission Discord workspace</td>
+                        </tr>
+                        <tr>
+                          <td className="p-2 font-bold">Content</td>
+                          <td className="p-2 font-mono">$200</td>
+                          <td className="p-2 font-mono">$200</td>
+                          <td className="p-2 font-mono">$0</td>
+                          <td className="p-2 text-gray-400">Maintain Drive and Canva assets storage</td>
+                        </tr>
+                        <tr>
+                          <td className="p-2 font-bold">AI Services</td>
+                          <td className="p-2 font-mono">$300</td>
+                          <td className="p-2 font-mono">$200</td>
+                          <td className="p-2 font-mono text-[#00FF41]">-$100</td>
+                          <td className="p-2 text-gray-400">Consolidate under Claude Enterprise</td>
+                        </tr>
+                        <tr>
+                          <td className="p-2 font-bold">Operations</td>
+                          <td className="p-2 font-mono">$0</td>
+                          <td className="p-2 font-mono">$0</td>
+                          <td className="p-2 font-mono">$0</td>
+                          <td className="p-2 text-gray-400">Sheets and Forms automation webhooks</td>
+                        </tr>
+                        <tr className="bg-[#111] font-bold">
+                          <td className="p-2">TOTAL LEDGER</td>
+                          <td className="p-2 font-mono">${totalCostBefore}</td>
+                          <td className="p-2 font-mono">${optimizedMonthlyCost}</td>
+                          <td className="p-2 font-mono text-[#00FF41]">-${potentialMonthlySavings}</td>
+                          <td className="p-2">Annualized Savings: ${potentialMonthlySavings * 12}/yr</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Chapter 4 */}
+                  <div>
+                    <h4 className="text-sm font-extrabold text-white uppercase tracking-wider mb-2 border-b border-[#333] pb-1.5 flex items-center gap-2">
+                      <span className="text-[#00FF41]">4.0</span> Risk Registry & Vulnerability Matrix
+                    </h4>
+                    <p className="mb-3">
+                      Based on current state audits, we have flagged the following critical gaps inside B2B operations:
+                    </p>
+                    <div className="space-y-3">
+                      <div className="p-3 bg-[#111] border border-red-500/20 rounded-lg">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="font-bold text-white text-[11px]">VULN-01: Shared Canva/ChatGPT Credentials</span>
+                          <span className="bg-red-500/10 text-red-400 px-2 py-0.2 rounded font-mono text-[9px]">CRITICAL</span>
+                        </div>
+                        <p className="text-[10px] text-gray-400 leading-normal">
+                          Five staff members use the same login credentials for visual design and AI tasks, triggering login blocks and session expiration. Remediation requires deploying enterprise password manager directories to split roles.
+                        </p>
+                      </div>
+
+                      <div className="p-3 bg-[#111] border border-amber-500/20 rounded-lg">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="font-bold text-white text-[11px]">VULN-02: Public Sharing Links on Drive Directories</span>
+                          <span className="bg-amber-500/10 text-amber-400 px-2 py-0.2 rounded font-mono text-[9px]">HIGH RISK</span>
+                        </div>
+                        <p className="text-[10px] text-gray-400 leading-normal">
+                          Historical folders containing contract rates and delivery specifications are configured to public view. Remediation demands a structural sweep, locking folders strictly to registered GO-BRICS email addresses.
+                        </p>
+                      </div>
+
+                      <div className="p-3 bg-[#111] border border-yellow-500/20 rounded-lg">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="font-bold text-white text-[11px]">VULN-03: Lack of Multi-Factor Authentication Lockout</span>
+                          <span className="bg-yellow-500/10 text-yellow-400 px-2 py-0.2 rounded font-mono text-[9px]">MEDIUM RISK</span>
+                        </div>
+                        <p className="text-[10px] text-gray-400 leading-normal">
+                          Google Workspace domain administrators do not enforce MFA. Account compromises could expose internal spreadsheets. Remediation requires administrative lockouts for accounts without active hardware tokens.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Chapter 5 */}
+                  <div>
+                    <h4 className="text-sm font-extrabold text-white uppercase tracking-wider mb-2 border-b border-[#333] pb-1.5 flex items-center gap-2">
+                      <span className="text-[#00FF41]">5.0</span> Change Management & Training Framework
+                    </h4>
+                    <p className="leading-relaxed">
+                      Transitioning the Business Lab off legacy systems requires careful employee coordination. Migrating from Discord to Telegram support channels must be accompanied by client notification scripts and support bot prompts. The roll-out of corporate password manager licenses will involve interactive training sessions to ensure compliance. Notion wiki guidelines must be frozen in read-only templates to prevent edit creep by guest accounts.
+                    </p>
+                  </div>
+
+                  {/* Chapter 6 */}
+                  <div>
+                    <h4 className="text-sm font-extrabold text-white uppercase tracking-wider mb-2 border-b border-[#333] pb-1.5 flex items-center gap-2">
+                      <span className="text-[#00FF41]">6.0</span> Performance Metrics & Target State Outcomes
+                    </h4>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                      <div className="p-3 bg-[#151515] border border-[#2E2E2E] rounded-lg">
+                        <span className="text-lg font-bold text-[#00FF41] font-mono">-$520 / mo</span>
+                        <span className="text-[9px] text-gray-400 block mt-1 uppercase font-bold">Licensing Reduction</span>
+                      </div>
+                      <div className="p-3 bg-[#151515] border border-[#2E2E2E] rounded-lg">
+                        <span className="text-lg font-bold text-[#00FF41] font-mono">100% SSO</span>
+                        <span className="text-[9px] text-gray-400 block mt-1 uppercase font-bold">Access Protection</span>
+                      </div>
+                      <div className="p-3 bg-[#151515] border border-[#2E2E2E] rounded-lg">
+                        <span className="text-lg font-bold text-[#00FF41] font-mono">6 hrs / wk</span>
+                        <span className="text-[9px] text-gray-400 block mt-1 uppercase font-bold">Manual Hours Reclaimed</span>
+                      </div>
+                      <div className="p-3 bg-[#151515] border border-[#2E2E2E] rounded-lg">
+                        <span className="text-lg font-bold text-[#00FF41] font-mono">0 leaks</span>
+                        <span className="text-[9px] text-gray-400 block mt-1 uppercase font-bold">Data Exposure Risk</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Chapter 7 */}
+                  <div className="p-4 bg-[#00FF41]/5 border border-[#00FF41]/30 rounded-lg select-text">
                     <h4 className="text-xs font-bold text-[#00FF41] uppercase tracking-wider mb-2">
-                      8. Final Consulting Recommendation
+                      7.0 Final Consulting Directive
                     </h4>
                     <p className="text-[11px] leading-relaxed">
-                      We strongly recommend immediate authorization of the Phase 1 initiatives, particularly the SSO enforcement and decommissioning of duplicate communication tools. Transitioning these tasks according to the 90-day timeline safeguards the platform assets under the Shungite Shield framework, delivering robust security, lower operational expense, and optimized workflow transparency.
+                      We strongly direct immediate authorization of the Sprint 1 initiatives (Discord deactivation, Google SSO/2FA enforcement). These steps yield immediate threat mitigation. Transitioning operations through Sprints 2–6 according to the 90-day plan protects company digital assets under the Shungite Shield framework, creating a secure, optimized B2B infrastructure with consulting-grade governance.
                     </p>
                   </div>
 
@@ -1612,7 +2038,7 @@ export default function App() {
       {/* Renders all sections in a beautiful black-on-white layout when print layout is triggered */}
       <div className="hidden print:block bg-white text-black p-4 select-text">
         
-        {/* Cover Sheet */}
+        {/* Page 1: Cover Sheet */}
         <div className="print-force-block block select-text">
           <div className="border-b-4 border-black pb-8 mt-12">
             <h1 className="text-3xl font-black tracking-tight uppercase">
@@ -1643,7 +2069,7 @@ export default function App() {
             </div>
             <div>
               <div className="font-bold text-gray-500 uppercase">Date of Publication:</div>
-              <div className="font-extrabold mt-1 text-black">June 10, 2026</div>
+              <div className="font-extrabold mt-1 text-black">June 11, 2026</div>
             </div>
           </div>
 
@@ -1652,10 +2078,57 @@ export default function App() {
           </div>
         </div>
 
-        {/* Section 1: Executive Dashboard */}
+        {/* Page 2: Executive Summary Report (Deloitte Style Section 1 & 2) */}
+        <div className="print-force-block select-text">
+          <h2 className="print-heading-main">01. Executive Summary & Strategic Context</h2>
+          <h3 className="print-heading-sub">Baseline overview of current-state IT operations, methodologies, and SWAT review.</h3>
+          
+          <div className="print-card-style">
+            <div className="font-bold text-xs border-b border-gray-200 pb-1.5 mb-2">1.1 Context & Objectives</div>
+            <p className="text-xs text-gray-700 leading-relaxed">
+              GO-BRICS Business Lab operates in a high-demand, high-security B2B environment. This technology audit, aligned with the Shungite Shield security matrix, establishes a thorough baseline of our 12 active SaaS platforms. Our baseline findings indicate that while developer velocity is extremely high (accelerated by Antigravity and GitHub pipelines), administrative governance, data retention, and user credentials protocols are fragmented. Implementing this strategic audit framework blocks active security threats, recovers $520/month in licensing seat wastes, and transitions the organization to a secure target state.
+            </p>
+          </div>
+
+          <div className="print-card-style">
+            <div className="font-bold text-xs border-b border-gray-200 pb-1.5 mb-2">1.2 SWOT Summary Analysis</div>
+            <div className="grid grid-cols-2 gap-4 text-xs mt-2 text-gray-700">
+              <div>
+                <strong>Strengths:</strong>
+                <ul className="list-disc pl-4 mt-1 text-[11px] space-y-0.5">
+                  <li>Developer speed via Antigravity agentic builders.</li>
+                  <li>Telegram instant bot notifications networks.</li>
+                </ul>
+              </div>
+              <div>
+                <strong>Weaknesses:</strong>
+                <ul className="list-disc pl-4 mt-1 text-[11px] space-y-0.5">
+                  <li>Fragmented file structures on Google Drive.</li>
+                  <li>Manual spreadsheet math entries on budget sheets.</li>
+                </ul>
+              </div>
+              <div className="mt-2">
+                <strong>Opportunities:</strong>
+                <ul className="list-disc pl-4 mt-1 text-[11px] space-y-0.5">
+                  <li>MFA and Single Sign-On integrations.</li>
+                  <li>Webhook connections between Forms and Sheets.</li>
+                </ul>
+              </div>
+              <div className="mt-2">
+                <strong>Threats:</strong>
+                <ul className="list-disc pl-4 mt-1 text-[11px] space-y-0.5">
+                  <li>Credential compromise on shared passwords.</li>
+                  <li>Data leaks from anonymous Google Drive sharing.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Page 3: Executive Dashboard & Stats (Deloitte Style Section 3 & 4) */}
         <div className="print-force-block">
-          <h2 className="print-heading-main">01. Executive Dashboard</h2>
-          <h3 className="print-heading-sub">Overview of active software subscriptions, metrics, and efficiency benchmarks.</h3>
+          <h2 className="print-heading-main">02. Executive Metrics & Performance Indicators</h2>
+          <h3 className="print-heading-sub">Calculations of infrastructure maturity, compliance ratings, and cost efficiency.</h3>
 
           <div className="print-grid-3">
             <div className="print-card-style">
@@ -1674,8 +2147,8 @@ export default function App() {
 
           <div className="print-grid-2">
             <div className="print-card-style">
-              <div className="font-bold text-gray-500 uppercase text-[9px]">Key Metrics & Performance Scores</div>
-              <div className="space-y-2.5 mt-3 text-xs">
+              <div className="font-bold text-gray-500 uppercase text-[9px]">Performance Benchmarks</div>
+              <div className="space-y-2 mt-2 text-xs">
                 <div className="flex justify-between border-b border-gray-100 pb-1">
                   <span>Infrastructure Health Score:</span>
                   <span className="font-bold">{healthScore}%</span>
@@ -1685,7 +2158,7 @@ export default function App() {
                   <span className="font-bold">{securityScore}%</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-100 pb-1">
-                  <span>Cost Efficiency Rating:</span>
+                  <span>Cost Efficiency Score:</span>
                   <span className="font-bold">{costScore}%</span>
                 </div>
                 <div className="flex justify-between pb-1">
@@ -1696,12 +2169,12 @@ export default function App() {
             </div>
 
             <div className="print-card-style">
-              <div className="font-bold text-gray-500 uppercase text-[9px]">Tool Categories Distribution</div>
-              <div className="space-y-2 mt-3 text-xs">
+              <div className="font-bold text-gray-500 uppercase text-[9px]">Tool Breakdown by Category</div>
+              <div className="space-y-1.5 mt-2 text-xs">
                 {categoryChartData.map((cat, idx) => (
                   <div key={idx} className="flex justify-between border-b border-gray-100 pb-1 last:border-0">
                     <span>{cat.name} Layer:</span>
-                    <span className="font-bold">{cat.value} Tools ({cat.percent}%)</span>
+                    <span className="font-bold">{cat.value} ({cat.percent}%)</span>
                   </div>
                 ))}
               </div>
@@ -1709,65 +2182,78 @@ export default function App() {
           </div>
         </div>
 
-        {/* Section 2: Infrastructure Inventory */}
+        {/* Page 4: Infrastructure Inventory Matrix Part 1 */}
         <div className="print-force-block">
-          <h2 className="print-heading-main">02. Infrastructure Inventory</h2>
-          <h3 className="print-heading-sub">Detailed catalog of corporate software services, spending, and recommendations.</h3>
+          <h2 className="print-heading-main">03. Infrastructure Inventory - Audited Tools (01–06)</h2>
+          <h3 className="print-heading-sub">Detailed purpose, usage patterns, security considerations, and action plans.</h3>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Tool Name</th>
-                <th>Category</th>
-                <th>Purpose</th>
-                <th>Monthly Cost</th>
-                <th>Owner</th>
-                <th>Status</th>
-                <th>Recommendation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tools.map((tool) => (
-                <tr key={tool.id}>
-                  <td className="font-bold">{tool.name}</td>
-                  <td>{tool.category}</td>
-                  <td>{tool.purpose}</td>
-                  <td className="font-mono">${tool.cost}</td>
-                  <td>{tool.owner}</td>
-                  <td>{tool.status}</td>
-                  <td className="font-bold">{tool.recommendation}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {tools.slice(0, 6).map((tool) => (
+            <div key={tool.id} className="print-card-style text-xs">
+              <div className="flex justify-between border-b border-gray-200 pb-1 mb-1.5 font-bold">
+                <span>{tool.name} ({tool.category})</span>
+                <span>Spend: ${tool.cost}/mo</span>
+              </div>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-700 text-[10px] leading-tight">
+                <div><strong>Purpose:</strong> {tool.purpose}</div>
+                <div><strong>Usage:</strong> {tool.usage}</div>
+                <div><strong>Strengths:</strong> {tool.strengths}</div>
+                <div><strong>Weaknesses:</strong> {tool.weaknesses}</div>
+                <div><strong>Security:</strong> {tool.security}</div>
+                <div><strong>Action Plan:</strong> {tool.recommendation} ({tool.priority} Priority)</div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Section 3: Integration Map */}
+        {/* Page 5: Infrastructure Inventory Matrix Part 2 */}
         <div className="print-force-block">
-          <h2 className="print-heading-main">03. Integration Map</h2>
-          <h3 className="print-heading-sub">Mapping the architectural layers of GO-BRICS information flow and security interfaces.</h3>
+          <h2 className="print-heading-main">04. Infrastructure Inventory - Audited Tools (07–12)</h2>
+          <h3 className="print-heading-sub">Detailed purpose, usage patterns, security considerations, and action plans.</h3>
+
+          {tools.slice(6, 12).map((tool) => (
+            <div key={tool.id} className="print-card-style text-xs">
+              <div className="flex justify-between border-b border-gray-200 pb-1 mb-1.5 font-bold">
+                <span>{tool.name} ({tool.category})</span>
+                <span>Spend: ${tool.cost}/mo</span>
+              </div>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-700 text-[10px] leading-tight">
+                <div><strong>Purpose:</strong> {tool.purpose}</div>
+                <div><strong>Usage:</strong> {tool.usage}</div>
+                <div><strong>Strengths:</strong> {tool.strengths}</div>
+                <div><strong>Weaknesses:</strong> {tool.weaknesses}</div>
+                <div><strong>Security:</strong> {tool.security}</div>
+                <div><strong>Action Plan:</strong> {tool.recommendation} ({tool.priority} Priority)</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Page 6: Integration Architecture Map */}
+        <div className="print-force-block">
+          <h2 className="print-heading-main">05. Integration Architecture Map</h2>
+          <h3 className="print-heading-sub">Visual connections and health scores of corporate system pipelines.</h3>
 
           <div className="space-y-4">
             {INTEGRATION_LAYERS.map((layer) => (
-              <div key={layer.id} className="print-card-style">
-                <div className="flex justify-between border-b border-gray-200 pb-1.5 mb-2">
-                  <span className="font-bold text-black text-xs">{layer.name}</span>
-                  <span className="text-gray-500 font-mono text-[9px]">Health: {layer.health ? `${layer.health}%` : 'Optimal'}</span>
+              <div key={layer.id} className="print-card-style text-xs">
+                <div className="flex justify-between border-b border-gray-200 pb-1 mb-1.5 font-bold">
+                  <span>{layer.name} Node</span>
+                  <span>Health Score: {layer.health ? `${layer.health}%` : 'Optimal'}</span>
                 </div>
-                <div className="text-[11px] text-gray-700 leading-relaxed">
-                  <p><strong>Description:</strong> {layer.desc}</p>
-                  <p className="mt-1"><strong>Included Tools:</strong> {layer.tools.join(', ')}</p>
-                  <p className="mt-1 text-red-700"><strong>Identified Issues:</strong> {layer.issues || 'None.'}</p>
+                <div className="text-[11px] text-gray-700 space-y-1 leading-snug">
+                  <div><strong>Description:</strong> {layer.desc}</div>
+                  <div><strong>Mapped Tools:</strong> {layer.tools.join(', ')}</div>
+                  <div className="text-red-700"><strong>Vulnerabilities:</strong> {layer.issues || 'No vulnerabilities logged.'}</div>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Section 4: Security Assessment */}
+        {/* Page 7: Security Assessment */}
         <div className="print-force-block">
-          <h2 className="print-heading-main">04. Security Assessment</h2>
-          <h3 className="print-heading-sub">Vulnerability audit and mitigations aligned with the Shungite Shield framework.</h3>
+          <h2 className="print-heading-main">06. Security Vulnerability Assessment</h2>
+          <h3 className="print-heading-sub">Hardening scorecards aligned with Shungite Shield standards.</h3>
 
           <table>
             <thead>
@@ -1795,146 +2281,150 @@ export default function App() {
           </table>
         </div>
 
-        {/* Section 5: Cost Analysis */}
+        {/* Page 8: Cost Analysis & Licensing Savings */}
         <div className="print-force-block">
-          <h2 className="print-heading-main">05. Cost Analysis</h2>
-          <h3 className="print-heading-sub">Summary of software subscription overheads and structural savings.</h3>
+          <h2 className="print-heading-main">07. Cost Analysis & Savings Ledger</h2>
+          <h3 className="print-heading-sub">Detailed breakdown of license overheads and consolidation saving curves.</h3>
 
           <div className="print-grid-2">
-            <div className="print-card-style">
-              <div className="font-bold text-gray-500 uppercase text-[9px] mb-2">Cost Optimization Measures</div>
-              <div className="space-y-2 text-xs">
-                <div className="flex justify-between border-b border-gray-100 pb-1">
-                  <span>Current Monthly Cost:</span>
-                  <span className="font-bold">${totalCostBefore} / mo</span>
+            <div className="print-card-style text-xs">
+              <div className="font-bold border-b border-gray-200 pb-1.5 mb-2">Cost Optimization Summary</div>
+              <div className="space-y-2 text-gray-700">
+                <div className="flex justify-between">
+                  <span>Baseline Monthly Spend:</span>
+                  <span className="font-bold">${totalCostBefore}</span>
                 </div>
-                <div className="flex justify-between border-b border-gray-100 pb-1">
-                  <span>Optimized Monthly Cost:</span>
-                  <span className="font-bold text-green-700">${optimizedMonthlyCost} / mo</span>
+                <div className="flex justify-between">
+                  <span>Target Monthly Spend:</span>
+                  <span className="font-bold text-green-700">${optimizedMonthlyCost}</span>
                 </div>
-                <div className="flex justify-between pb-1">
-                  <span>Potential Annual Savings:</span>
-                  <span className="font-bold text-green-700">${potentialMonthlySavings * 12} / yr</span>
+                <div className="flex justify-between border-t border-gray-100 pt-1 font-bold text-black">
+                  <span>Monthly Capital Reclaimed:</span>
+                  <span className="text-green-700">${potentialMonthlySavings}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Annualized Reclaimed Capital:</span>
+                  <span className="text-green-700">${potentialMonthlySavings * 12}</span>
                 </div>
               </div>
             </div>
 
-            <div className="print-card-style">
-              <div className="font-bold text-gray-500 uppercase text-[9px] mb-2">Decommissioning Decisions</div>
-              <ul className="print-bullets text-xs">
-                <li>Discord workspace decommissioning (-$40/mo)</li>
-                <li>Google Forms integration optimization (-$20/mo)</li>
-                <li>Notion seat allocation audit (-$80/mo)</li>
-                <li>Claude & ChatGPT developer license consolidation (-$100/mo)</li>
-                <li>Google Workspace idle license sweep (-$120/mo)</li>
+            <div className="print-card-style text-xs">
+              <div className="font-bold border-b border-gray-200 pb-1.5 mb-2">Primary Decommissioning Directives</div>
+              <ul className="print-bullets space-y-1 text-gray-700">
+                <li>Decommission redundant Discord server boosts (-$40/mo).</li>
+                <li>Consolidate individual ChatGPT/Claude Pro plans onto Claude Enterprise (-$100/mo).</li>
+                <li>Audit guest seats in Notion workspaces to drop inactive nodes (-$80/mo).</li>
+                <li>Prune idle contractor and guest emails in Google Workspace (-$120/mo).</li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* Section 6: Gap Analysis */}
+        {/* Page 9: Gap Findings Matrix */}
         <div className="print-force-block">
-          <h2 className="print-heading-main">06. Gap Analysis Findings</h2>
-          <h3 className="print-heading-sub">Detailed audit observations and actionable solution patterns for 12 identified gaps.</h3>
+          <h2 className="print-heading-main">08. Gap Findings Matrix</h2>
+          <h3 className="print-heading-sub">Comprehensive audit of 12 corporate software gaps.</h3>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {GAP_FINDINGS.map((gap, idx) => (
-              <div key={gap.id} className="print-card-style">
-                <div className="flex justify-between border-b border-gray-200 pb-1.5 mb-2">
-                  <span className="font-bold text-black text-xs">0{idx+1}. {gap.title}</span>
-                  <span className="text-gray-500 text-[9px] uppercase font-bold">Priority: {gap.priority} | Impact: {gap.impact}</span>
+              <div key={gap.id} className="print-card-style text-xs">
+                <div className="flex justify-between border-b border-gray-200 pb-1 mb-1 font-bold">
+                  <span>0{idx+1}. {gap.title}</span>
+                  <span>Impact: {gap.impact} | Priority: {gap.priority}</span>
                 </div>
-                <div className="text-[11px] text-gray-700 space-y-1">
-                  <p><strong>Observation:</strong> {gap.desc}</p>
-                  <p className="text-green-800"><strong>Action Plan:</strong> {gap.solution}</p>
-                </div>
+                <p className="text-[10px] text-gray-700 leading-normal">
+                  <strong>Observation:</strong> {gap.desc}
+                </p>
+                <p className="text-[10px] text-green-800 leading-normal mt-0.5">
+                  <strong>Remediation Plan:</strong> {gap.solution}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Section 7: 90-Day Roadmap */}
+        {/* Page 10: 90-Day Roadmap (Sprints 1–3) */}
         <div className="print-force-block">
-          <h2 className="print-heading-main">07. 90-Day Strategic Roadmap</h2>
-          <h3 className="print-heading-sub">Three-phase transition plan to consolidate systems, improve automation and enforce security policies.</h3>
+          <h2 className="print-heading-main">09. 90-Day Implementation Timeline (Sprints 1–3)</h2>
+          <h3 className="print-heading-sub">Detailed 15-day sprint checklists covering Days 1–45.</h3>
 
-          {Object.entries(ROADMAP_DATA).map(([phaseKey, phase]) => (
-            <div key={phaseKey} className="print-card-style">
-              <div className="border-b border-gray-200 pb-1.5 mb-3 flex justify-between">
-                <span className="font-bold text-black text-xs">{phase.title}</span>
-                <span className="text-gray-500 font-bold text-[10px]">{phase.timeline}</span>
+          {Object.entries(ROADMAP_SPRINTS).slice(0, 3).map(([key, sprint]) => (
+            <div key={key} className="print-card-style text-xs">
+              <div className="flex justify-between border-b border-gray-200 pb-1.5 mb-2 font-bold">
+                <span>{sprint.title}</span>
+                <span>{sprint.timeline}</span>
               </div>
-              
-              <div className="mb-3 text-[11px]">
-                <strong className="text-gray-600">Core Objectives:</strong> {phase.objectives.join(', ')}
+              <div className="text-[10px] text-gray-700 space-y-1.5 leading-snug">
+                <div><strong>Sprint Objective:</strong> {sprint.objectives}</div>
+                <div><strong>Key Deliverables:</strong> {sprint.deliverables.join(', ')}</div>
+                <div className="grid grid-cols-3 gap-4 pt-1 font-semibold text-black">
+                  <div>Owner: {sprint.owner}</div>
+                  <div>Effort: {sprint.effort}</div>
+                  <div>Estimated Time: {sprint.implementationTime}</div>
+                </div>
+                <div className="text-gray-500"><strong>Measurable Impact:</strong> {sprint.measurableImpact}</div>
               </div>
-
-              <table>
-                <thead>
-                  <tr>
-                    <th>Initiative Title</th>
-                    <th>Priority</th>
-                    <th>Effort</th>
-                    <th>Impact</th>
-                    <th>Owner</th>
-                    <th>Timeline</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {phase.initiatives.map((init) => (
-                    <tr key={init.id}>
-                      <td className="font-bold">{init.title}</td>
-                      <td>{init.priority}</td>
-                      <td>{init.effort}</td>
-                      <td>{init.impact}</td>
-                      <td>{init.owner}</td>
-                      <td>{init.timeline}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
           ))}
         </div>
 
-        {/* Section 8: Final Recommendations */}
+        {/* Page 11: 90-Day Roadmap (Sprints 4–6) */}
         <div className="print-force-block">
-          <h2 className="print-heading-main">08. Final Recommendations</h2>
-          <h3 className="print-heading-sub">Consulting-grade directive prepared by McKinsey/Deloitte auditing frameworks.</h3>
+          <h2 className="print-heading-main">10. 90-Day Implementation Timeline (Sprints 4–6)</h2>
+          <h3 className="print-heading-sub">Detailed 15-day sprint checklists covering Days 46–90.</h3>
 
-          <div className="space-y-4 text-xs text-gray-800 leading-relaxed">
+          {Object.entries(ROADMAP_SPRINTS).slice(3, 6).map(([key, sprint]) => (
+            <div key={key} className="print-card-style text-xs">
+              <div className="flex justify-between border-b border-gray-200 pb-1.5 mb-2 font-bold">
+                <span>{sprint.title}</span>
+                <span>{sprint.timeline}</span>
+              </div>
+              <div className="text-[10px] text-gray-700 space-y-1.5 leading-snug">
+                <div><strong>Sprint Objective:</strong> {sprint.objectives}</div>
+                <div><strong>Key Deliverables:</strong> {sprint.deliverables.join(', ')}</div>
+                <div className="grid grid-cols-3 gap-4 pt-1 font-semibold text-black">
+                  <div>Owner: {sprint.owner}</div>
+                  <div>Effort: {sprint.effort}</div>
+                  <div>Estimated Time: {sprint.implementationTime}</div>
+                </div>
+                <div className="text-gray-500"><strong>Measurable Impact:</strong> {sprint.measurableImpact}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Page 12: Final Recommendations & Governance Directives */}
+        <div className="print-force-block">
+          <h2 className="print-heading-main">11. Final Recommendations & Governance Policies</h2>
+          <h3 className="print-heading-sub">Enterprise technology directives under Shungite Shield guidelines.</h3>
+
+          <div className="space-y-4 text-xs text-gray-700 leading-relaxed">
             <div>
-              <h4 className="font-bold text-black uppercase text-[11px] border-b border-gray-200 pb-1">1. Current State Summary</h4>
+              <h4 className="font-bold text-black uppercase text-[11px] border-b border-gray-200 pb-1">5.0 Corporate Governance Rules</h4>
               <p className="mt-1">
-                The current technological infrastructure of the GO-BRICS Business Lab represents a highly agile, modern hybrid-cloud and AI ecosystem. Leveraging 12 distinct SaaS licenses across design, coding assistants, project databases, and communication layers, operations are dynamic but fragmented. There is significant overlapping utility (e.g. Discord and Telegram both serving communication needs) and loose governance regarding password storage and Google Drive access permissions. Decommissioning duplicate tools and standardising team knowledge repositories will immediately lock down vulnerabilities and prune licensing costs by 24%.
+                All administrative access directories must enforce Single Sign-On (SSO) and mandatory Multi-Factor Authentication. Account permissions audits must occur monthly, stripping former contractors immediately. Plain-text sharing of credentials inside chat rooms is prohibited.
               </p>
             </div>
 
             <div>
-              <h4 className="font-bold text-black uppercase text-[11px] border-b border-gray-200 pb-1">2. Key Risks</h4>
+              <h4 className="font-bold text-black uppercase text-[11px] border-b border-gray-200 pb-1">6.0 Change Management Framework</h4>
               <p className="mt-1">
-                Access control represents the highest threat exposure. The absence of single sign-on (SSO) combined with loose link sharing configurations on Google Drive allows external guests to traverse internal spreadsheets. Furthermore, the lack of an incident runbook poses a vulnerability in the event of Telegram/Slack notification bot failure.
+                Staff transition off the legacy Discord channel must follow whitelisted support script rules. Dedicated onboarding guides inside Notion will instruct operators on how to handle incoming support tickets using webhook notifications.
               </p>
             </div>
 
             <div>
-              <h4 className="font-bold text-black uppercase text-[11px] border-b border-gray-200 pb-1">3. Major Opportunities</h4>
+              <h4 className="font-bold text-black uppercase text-[11px] border-b border-gray-200 pb-1">7.0 Expected Target State Outcomes</h4>
               <p className="mt-1">
-                Standardising code deliverables under the Antigravity automated pipelines has successfully boosted team throughput. Replicating this automation inside the client lead pipeline (forms integrated to sheets via webhook logs) saves operations team members substantial manual sorting overheads.
+                Completing the 6 roadmap sprints reduces licensing spending by 24%, reclaims 6 hours of developer scripting weekly, limits lead sorting decay by 75%, and restricts historical information folders to white-listed emails, achieving Grade A compliance.
               </p>
             </div>
 
-            <div>
-              <h4 className="font-bold text-black uppercase text-[11px] border-b border-gray-200 pb-1">4. Expected Outcomes</h4>
-              <p className="mt-1">
-                Execution of this roadmap establishes complete data security compliance under the Shungite Shield framework, yielding monthly expenditure reductions of $520, reducing coordination leakages by 18%, and saving developer teams 6 hours of manual processing weekly.
-              </p>
-            </div>
-
-            <div className="p-4 bg-gray-100 border border-gray-300 rounded-lg">
+            <div className="p-4 bg-gray-100 border border-gray-300 rounded-lg mt-4">
               <h4 className="font-bold text-black uppercase text-[10px] mb-1">Final Consulting Directive</h4>
-              <p className="text-[11px]">
-                Immediate authorization of Phase 1 is recommended. Consolidating overlapping communication media and enforcing SAML SSO will yield immediate risk reductions. Progressing through Phase 2 and 3 initiatives guarantees long-term operational resilience and consulting-grade workspace management.
+              <p className="text-[11px] leading-snug">
+                Authorize Sprint 1 access lockdown immediately. Enforcing SAML SSO locks primary folders, and deprecating redundant messaging spaces prunes active cost. Progressing through sprints 2–6 safeguards assets under the Shungite Shield framework, creating a secure B2B infrastructure with consulting-grade governance.
               </p>
             </div>
           </div>
