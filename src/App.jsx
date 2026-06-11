@@ -733,7 +733,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white flex flex-col font-sans selection:bg-[#00FF41]/30 selection:text-white">
+    <div id="app-container" className="min-h-screen bg-[#0A0A0A] text-white flex flex-col font-sans selection:bg-[#00FF41]/30 selection:text-white">
       
       {/* ----------------- SCREEN INTERACTIVE LAYOUT ----------------- */}
       <div className="no-print flex-grow flex flex-col">

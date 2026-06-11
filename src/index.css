@@ -90,11 +90,12 @@ html, body {
     line-height: 1.4 !important;
   }
 
-  #root {
+  #root, #app-container {
     background: #FFFFFF !important;
     color: #000000 !important;
     display: block !important;
     min-height: auto !important;
+    height: auto !important;
   }
 
   /* Hide navigation, buttons and compliance panel during print */
